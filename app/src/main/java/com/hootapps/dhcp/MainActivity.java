@@ -61,6 +61,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             } else {
                 state = STATE_STOPPED;
                 stop();
+                updateUI();
+
             }
         } else if (id == R.id.settings) {
             onSettings();
@@ -68,8 +70,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
         updateUI();
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop();
     }
 
     public void onSettings() {
@@ -120,6 +126,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             } else {
                 stop();
+                updateUI();
             }
 
         }
@@ -168,7 +175,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
 
-        updateUI();
     }
 
     public static int sounds[] = new int[] {

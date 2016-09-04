@@ -43,13 +43,18 @@ public class AudioPlayer {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             Uri uri = Uri.parse(String.format("android.resource://%s/", c.getPackageName()) + rid);
             mediaPlayer.setDataSource(c, uri);
-            mediaPlayer.setLooping(loop > 1);
+//            mediaPlayer.setLooping(loop > 1);
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+
+                    Log.e(TAG, String.format("  loop: %s %s", loopCount, loop));
+
                     if (loopCount >= loop) {
                         stop();
                     } else {
+                        mediaPlayer.seekTo(0);
+                        mediaPlayer.start();
                         loopCount++;
                     }
 
