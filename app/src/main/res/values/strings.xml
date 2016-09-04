@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Đồng hồ công phu</string>
+    <string name="started">Đang công phu</string>
+    <string name="stopped">Bấm để bắt đầu</string>
+
+    <string name="select_sound">Chọn âm thanh</string>
+
+
+    <string-array name="names">
+        <item>Beep 1</item>
+        <item>Beep 2</item>
+        <item>Beep 3</item>
+        <item>Beep 4</item>
+        <item>Beep 5</item>
+        <item>Button 1</item>
+        <item>Button 2</item>
+        <item>Button 3</item>
+        <item>Button 4</item>
+        <item>Click 1</item>
+        <item>Click 2</item>
+        <item>Click 3</item>
+    </string-array>
+
+
+</resources>

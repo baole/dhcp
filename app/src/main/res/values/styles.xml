@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.NoActionBar"/>
+
+    <style name="Button">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+</resources>
