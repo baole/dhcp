@@ -12,7 +12,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 public class MainActivity extends Activity implements View.OnClickListener {
+    int increasement = 0;
+    final long fiveMin = 60 * 1000 * 5;
+    final long oneSec = 1000;
 
     private static final String TAG = "Main";
     private static final String PREF_SOUND = "sound";
@@ -46,8 +50,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.settings).setOnClickListener(this);
 
         updateUI();
-
-
     }
 
     @Override
@@ -62,13 +64,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 state = STATE_STOPPED;
                 stop();
                 updateUI();
-
             }
         } else if (id == R.id.settings) {
             onSettings();
         }
-
-
         updateUI();
     }
 
@@ -97,7 +96,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public static void setSelectedSoundIndex(Context context, int selected) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        pref.edit().putInt(PREF_SOUND, selected).commit();
+        pref.edit().putInt(PREF_SOUND, selected).apply();
     }
 
     private void updateUI() {
@@ -113,9 +112,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
-    int increasement = 0;
-    final long fiveMin = 60 * 1000 * 5;
-    final long oneSec = 1000;
 
     Runnable lapRunnable = new Runnable() {
         @Override
@@ -123,12 +119,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
             onLap();
             if (increasement <= 11) {
                 handler.postDelayed(this, fiveMin);
-
             } else {
                 stop();
                 updateUI();
             }
-
         }
     };
 
@@ -142,10 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     };
 
     private void updateTicker() {
-
-
         timeView.setText(String.format("%s:%02d", timer / 60, timer % 60));
-
     }
 
     private void startTimer() {
@@ -155,10 +146,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         handler.postDelayed(lapRunnable, fiveMin);// delay 5 min
 
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "com.hootapps.dhcp:");
         wl.acquire();
 
-
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.notification_icon)
+//                .setContentTitle(textTitle)
+//                .setContentText(textContent)
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
     private void stop() {
@@ -193,7 +188,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     } ;
 
     private void onLap() {
-        Log.e(TAG, String.format("onLap %s", increasement));
 
         int sound = R.raw.beep2;
 
@@ -201,7 +195,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             sound = sounds[selectedSound];
         }
 
-        Log.e(TAG, "diff: " + (R.raw.beep2 == sounds[1]));
+        Log.e(TAG, String.format("onLap %s, sound=%s, diff=%s", increasement, selectedSound, (R.raw.beep2 == sounds[1])));
 
         if (increasement == 0 || increasement == 1
                 || increasement == 4 || increasement == 5

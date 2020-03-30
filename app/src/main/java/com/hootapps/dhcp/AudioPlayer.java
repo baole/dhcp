@@ -27,7 +27,7 @@ public class AudioPlayer {
     }
 
     int loopCount = 1;
-    public void playSound(Context c, int rid, final int loop) {
+    void playSound(Context c, int rid, final int loop) {
 
         if (c == null) {
             return;
@@ -70,7 +70,7 @@ public class AudioPlayer {
     }
 
 
-    public static void play(Context context, int rid, int loop) {
+    static void play(Context context, int rid, int loop) {
         new AudioPlayer().playSound(context, rid, loop);
     }
 
