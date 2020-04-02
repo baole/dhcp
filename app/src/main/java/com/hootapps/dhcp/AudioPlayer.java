@@ -12,21 +12,21 @@ import android.util.Log;
 public class AudioPlayer {
 
     private static final String TAG = "Audio";
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mMediaPlayer;
+    private int mLoopCount = 1;
 
     public void stop() {
-        if (mediaPlayer != null) {
+        if (mMediaPlayer != null) {
             try {
-                mediaPlayer.release();
-                mediaPlayer = null;
+                mMediaPlayer.release();
+                mMediaPlayer = null;
             } catch (Throwable e) {
             }
         }
 
-        loopCount = 1;
+        mLoopCount = 1;
     }
 
-    int loopCount = 1;
     void playSound(Context c, int rid, final int loop) {
 
         if (c == null) {
@@ -39,30 +39,27 @@ public class AudioPlayer {
             
             Log.e(TAG, String.format("playSound: %s", loop));
             
-            mediaPlayer = new MediaPlayer();// MediaPlayer.create(c, rid);
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
+            mMediaPlayer = new MediaPlayer();// MediaPlayer.create(c, rid);
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             Uri uri = Uri.parse(String.format("android.resource://%s/", c.getPackageName()) + rid);
-            mediaPlayer.setDataSource(c, uri);
-//            mediaPlayer.setLooping(loop > 1);
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            mMediaPlayer.setDataSource(c, uri);
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-
-                    Log.e(TAG, String.format("  loop: %s %s", loopCount, loop));
-
-                    if (loopCount >= loop) {
+//                    Log.e(TAG, String.format("  loop: %s %s", loopCount, loop));
+                    if (mLoopCount >= loop) {
                         stop();
                     } else {
                         mediaPlayer.seekTo(0);
                         mediaPlayer.start();
-                        loopCount++;
+                        mLoopCount++;
                     }
 
                 }
             });
 
-            mediaPlayer.prepare();
-            mediaPlayer.start();
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
         } catch (Throwable e) {
             //ignored
             e.printStackTrace();

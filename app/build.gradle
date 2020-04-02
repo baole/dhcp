@@ -7,15 +7,15 @@ android {
         applicationId "com.hootapps.dhcp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.2"
+        versionCode 5
+        versionName "1.4"
     }
 
 
 
-    if (new File("../keystore2.properties").exists()) {
+    if (new File("../../keystore2.properties").exists()) {
         Properties props = new Properties()
-        props.load(new FileInputStream("../keystore2.properties"))
+        props.load(new FileInputStream("../../keystore2.properties"))
 
         signingConfigs {
             release {
@@ -53,5 +53,5 @@ android {
 }
 
 dependencies {
-//    implementation 'androidx.core:core:1.2.0'
+//    implementation "androidx.work:work-runtime:2.3.4"
 }
